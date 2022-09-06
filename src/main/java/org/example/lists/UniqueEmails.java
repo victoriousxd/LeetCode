@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Problem: https://leetcode.com/problems/unique-email-addresses/
+ * Problem: <a href="https://leetcode.com/problems/unique-email-addresses/">...</a>
  */
 
 public class UniqueEmails {
@@ -17,10 +17,10 @@ public class UniqueEmails {
             StringBuilder sb = new StringBuilder();
             int i = 0;
             boolean foundLocal = false;
-            while (!foundLocal){
+            while (!foundLocal) {
                 char c = email.charAt(i);
 
-                switch(c){
+                switch (c) {
 
                     case '+':
                         while (email.charAt(++i) != '@') {}
@@ -38,21 +38,17 @@ public class UniqueEmails {
 
             }
 
-            String domain = email.substring(i+1, email.length()-4);
+            String domain = email.substring(i + 1, email.length() - 4);
 
-            if (email.endsWith(".com")){
-                Set<String> localList = uniqueEmails.get(domain);
-                if (localList == null){
-                    localList = new HashSet<String>();
-                    uniqueEmails.put(domain, localList);
-                }
+            if (email.endsWith(".com")) {
+                Set<String> localList = uniqueEmails.computeIfAbsent(domain, k -> new HashSet<String>());
                 localList.add(sb.toString());
             }
 
         }
 
         int total = 0;
-        for (Set<String> localList : uniqueEmails.values()){
+        for (Set<String> localList : uniqueEmails.values()) {
             total += localList.size();
         }
         return total;

@@ -5,30 +5,32 @@ import org.example.utility.Utility;
 import java.util.*;
 
 /**
- * Problem: https://leetcode.com/problems/meeting-rooms-ii/
- * */
+ * Problem: <a href="https://leetcode.com/problems/meeting-rooms-ii/">...</a>
+ */
 
 public class MeetingRooms {
     List<Room> meetingRooms = new LinkedList<>();
     int count = 0;
-    public class Room {
-        public int ending;
-        public int id;
-        public Room(int[] meeting){
-            System.out.println(String.format("Creating room %d for meeting: %d - %d", id, meeting[0], meeting[1]));
-            id = ++count;
-            addMeeting(meeting);
-        }
-        public void addMeeting(int[] meeting){
-            ending = meeting[1];
-        }
 
-
+    private static int compareIntervals(int[] interval1, int[] interval2) {
+        if (interval1[0] < interval2[0]) {
+            return -1;
+        } else if (interval1[0] > interval2[0]) {
+            return 1;
+        } else {
+            if (interval1[1] < interval2[1]) {
+                return -1;
+            } else if (interval1[1] > interval2[1]) {
+                return 1;
+            }
+            return 0;
+        }
     }
-    public void findMeetingRoom(int[] meeting){
-        for(int i = 0; i < meetingRooms.size(); i++){
-            if(meeting[0] >= meetingRooms.get(i).ending){
-                System.out.println(String.format("Adding meeting: %d - %d to room %d", meeting[0], meeting[1], i ));
+
+    public void findMeetingRoom(int[] meeting) {
+        for (int i = 0; i < meetingRooms.size(); i++) {
+            if (meeting[0] >= meetingRooms.get(i).ending) {
+                System.out.printf("Adding meeting: %d - %d to room %d%n", meeting[0], meeting[1], i);
                 meetingRooms.get(i).addMeeting(meeting);
                 return;
             }
@@ -46,16 +48,17 @@ public class MeetingRooms {
         }
         return count;
     }
+
     public int minMeetingRooms(int[][] intervals) {
-        int[][] sorted = Arrays.stream(intervals).sorted((x, y) -> compareIntervals(x, y)).toArray(int[][]::new);
+        int[][] sorted = Arrays.stream(intervals).sorted(MeetingRooms::compareIntervals).toArray(int[][]::new);
         Queue<Integer> ends = new PriorityQueue<>();
         Utility.print2dMatrix(sorted);
-        for (int i = 0; i < sorted.length; i++) {
+        for (int[] ints : sorted) {
 
-            if (ends.isEmpty() == false && sorted[i][0] >= ends.peek()) {
+            if (ends.isEmpty() == false && ints[0] >= ends.peek()) {
                 ends.remove();
             }
-            ends.add(sorted[i][1]);
+            ends.add(ints[1]);
         }
         return ends.size();
     }
@@ -102,26 +105,28 @@ public class MeetingRooms {
         return intervals;
     }
 
-    private static int compareIntervals(int[] interval1, int[] interval2) {
-        if (interval1[0] < interval2[0]) {
-            return -1;
-        } else if (interval1[0] > interval2[0]) {
-            return 1;
-        } else {
-            if (interval1[1] < interval2[1]) {
-                return -1;
-            } else if (interval1[1] > interval2[1]) {
-                return 1;
-            }
-            return 0;
-        }
-    }
-
     private int[][] copyTo(int[][] source, int[][] destination, int start, int end) {
         int index = 0;
         while (start < end) {
             destination[index++] = source[start++];
         }
         return destination;
+    }
+
+    public class Room {
+        public int ending;
+        public int id;
+
+        public Room(int[] meeting) {
+            System.out.printf("Creating room %d for meeting: %d - %d%n", id, meeting[0], meeting[1]);
+            id = ++count;
+            addMeeting(meeting);
+        }
+
+        public void addMeeting(int[] meeting) {
+            ending = meeting[1];
+        }
+
+
     }
 }

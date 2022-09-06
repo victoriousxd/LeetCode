@@ -3,7 +3,7 @@ package org.example.lists;
 import java.util.Stack;
 
 /**
- * Problem: https://leetcode.com/problems/squares-of-a-sorted-array/
+ * Problem: <a href="https://leetcode.com/problems/squares-of-a-sorted-array/">...</a>
  */
 
 public class SortedSquares {
@@ -12,15 +12,15 @@ public class SortedSquares {
         Stack<Integer> negatives = new Stack<>();
 
         while (index < nums.length && nums[index] < 0) {
-            negatives.add(nums[index++]*-1);
+            negatives.add(nums[index++] * -1);
         }
 
 
-        for(int i = 0; i < nums.length; i++){
+        for (int i = 0; i < nums.length; i++) {
             // compare to stack to see what should come first
             int newValue;
 
-            if (index == nums.length || (!negatives.isEmpty() && negatives.peek() < nums[index])){
+            if (index == nums.length || (!negatives.isEmpty() && negatives.peek() < nums[index])) {
                 newValue = negatives.pop();
             } else {
                 newValue = nums[index++];

@@ -1,13 +1,10 @@
 package org.example.lists;
 
-import org.example.utility.Utility;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class MeetingRoomsTest {
     @Test
-    public void testTwoSumTest(){
+    public void testTwoSumTest() {
         int[][] meetings = new int[3][2];
         meetings[2][0] = 1;
         meetings[2][1] = 3;
@@ -22,8 +19,9 @@ class MeetingRoomsTest {
         System.out.println(result);
 
     }
+
     @Test
-    public void testTwoSumTest2(){
+    public void testTwoSumTest2() {
         int[][] meetings = new int[4][2];
         meetings[2][0] = 1;
         meetings[2][1] = 3;
